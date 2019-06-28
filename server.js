@@ -4,6 +4,8 @@
 const express = require('express');
 const app = express();
 
+const connectDB = require('./config/db');
+
 //GET response for home page '/' route 
 app.get('/',function(req, res) {
     return res.json({ msg: "Welcome to the Contact Keeper API..."})
