@@ -1,10 +1,10 @@
 const express = require('express');
-
-
 const router= express.Router();
 
 
-// @route     GET api/users
+// CRUD Routes
+
+// @route     GET api/contacts
 // @desc      Get all users contacts
 // @access    Private
 router.get('/', (req, res) => {
@@ -29,7 +29,7 @@ router.put('/:id', (req, res) => {
 // @route     DELETE api/contacts
 // @desc      Delete contact
 // @access    Private
-router.put('/:id', (req, res) => {
+router.delete('/:id', (req, res) => {
      res.send('Delete contact');
 });
 

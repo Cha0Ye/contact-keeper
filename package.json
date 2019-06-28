@@ -1,10 +1,10 @@
 {
   "name": "03_contact-keeper",
   "version": "1.0.0",
-  "description": "Contact manaager app",
+  "description": "Contact Manager app",
   "main": "server.js",
   "scripts": {
-    "start": "echo \"node server.js",
+    "start": "node server.js",
     "server": "nodemon server.js"
   },
   "keywords": [],
