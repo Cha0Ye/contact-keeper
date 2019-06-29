@@ -2,9 +2,18 @@
 //bring in express
 //common js, must bring in module this way because we don't have Babel
 const express = require('express');
-const app = express();
 
 const connectDB = require('./config/db');
+
+const app = express();
+
+//connect database
+connectDB();
+
+// Initialize middleware
+// middleware to accept body data req.body
+app.use(express.json({ extended: false}));
+
 
 //GET response for home page '/' route 
 app.get('/',function(req, res) {
