@@ -1,5 +1,6 @@
 const express = require('express');
 const router= express.Router();
+const bcrypt = require('bcryptjs');
 
 // validates inputs
 const { check, validationResult } = require('express-validator');
@@ -25,36 +26,41 @@ router.post('/', [
         min: 6
     })
     ], 
-    (req, res) => {
+    async (req, res) => {
         const errors = validationResult(req);
         if(!errors.isEmpty()) {
             return res.status(400).json({ errors: errors.array() });
         } 
-        res.send('passed');
+        // destructure name, email, and password from body
+        const { name, email, password } = req.body;
+        try {
+
+            //check to see if user already exist
+            let user = await User.findOne( { email });
+
+            // if user exist already, return 400 and msg
+            if(user) {
+                return res.status(400).json({ msg: 'User already exist' });
+            }
+
+            //otherwise, create new user instance
+            user = new User({ name, email, password});
+
+            //generate salt for hashing
+            const salt = await bcrypt.genSalt(10);
+            
+            //hash password with generated salt
+            user.password = await bcrypt.hash(password, salt);
+
+            // save the user
+            await user.save();
+            res.send('User saved')
+        } catch(err) {
+            console.error(err.message);
+            res.status(500).send('Server Error');
+        }
     }
 );
 
 module.exports = router;
-// [
-//     // validate the name
-//     check('name', 'name is required')
-//     // .not() and .isEmpty() makes sure it isn't empty 
-//     .not()
-//     .isEmpty(),
-
-//     // check to see if valid email
-//     check('email', 'Please include a valid email').isEmail(),
-
-//     // check to see if password contains 6 or more characters
-//     check('password', 'Please enter a pasword with 6 or more characters').isLength({
-//         min: 6
-//     })
-//     ],
-//     (req, res) => {
-//         const errors = validationResult(req);
-//         if(!errors.isEmpty()) {
-//             return res.status(400).json({ errors: errors.array });
-//         }
-//         res.send('passed')
-//     }
 
