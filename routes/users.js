@@ -1,6 +1,10 @@
 const express = require('express');
 const router= express.Router();
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const config = require('config');
+
+const JWT_EXPIRATION= 360000;
 
 // validates inputs
 const { check, validationResult } = require('express-validator');
@@ -36,7 +40,7 @@ router.post('/', [
         try {
 
             //check to see if user already exist
-            let user = await User.findOne( { email });
+            let user = await User.findOne({ email });
 
             // if user exist already, return 400 and msg
             if(user) {
@@ -54,7 +58,25 @@ router.post('/', [
 
             // save the user
             await user.save();
-            res.send('User saved')
+
+            // use userid as payload to JWT
+            const payload = {
+                user: {
+                    id: user.id
+                }
+            };
+
+            // signs JWT payload with secret and expires in one hour
+            jwt.sign(payload, config.get('jwtSecret'), {
+                expiresIn: JWT_EXPIRATION
+            }, (err, token) => {
+                if(err) {
+                    throw err;
+                }
+                res.json({ token });
+                
+            });
+            
         } catch(err) {
             console.error(err.message);
             res.status(500).send('Server Error');
