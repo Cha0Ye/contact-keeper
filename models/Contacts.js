@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 // UserSchema fields 
 const ContactSchema = mongoose.Schema({
     user: {
+        // relationship between contact and user
         type: mongoose.Schema.Types.ObjectId, 
         ref: 'users'
     },
@@ -19,10 +20,6 @@ const ContactSchema = mongoose.Schema({
     },
     type: {
         type: String
-    },
-    password: {
-        type: String, 
-        required: true
     },
     date: {
         type: Date, 
