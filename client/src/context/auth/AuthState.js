@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import authReducer from './authReducer';
 import AuthContext from './authContext';
 import {
@@ -26,7 +27,28 @@ const AuthState = (props) => {
     // Load User 
 
     // Register User
+    const register = async (formData) => {
 
+        // Configures axios to use headers Content-type to application/json 
+        const config = {
+            headers: {
+                'Content-type': 'application/json' 
+            }
+        }
+        try {
+            const res = await axios.post('/api/users/', formData, config);
+            dispatch({
+                type: REGISTER_SUCCESS,
+                payload: res.data
+            })
+        }
+        catch(err) {
+            dispatch({
+                type: REGISTER_FAIL,
+                payload: err.response.data.msg
+            });
+        }
+    }
     // Login User
 
     // Logout 
