@@ -1,3 +1,4 @@
+ 
 import {
     REGISTER_SUCCESS, 
     REGISTER_FAIL,
@@ -8,6 +9,7 @@ import {
     LOGOUT, 
     CLEAR_ERRORS
 } from '../types';
+
 
 export default (state, action) => {
     switch(action.type) {

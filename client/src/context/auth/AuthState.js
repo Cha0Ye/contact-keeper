@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useReducer} from 'react';
 import axios from 'axios';
 import authReducer from './authReducer';
 import AuthContext from './authContext';
@@ -22,9 +22,11 @@ const AuthState = (props) => {
         error: null
     };
     
-    const [state, dispatch] = useState(authReducer, initialState);
+    const [state, dispatch] = useReducer(authReducer, initialState);
 
     // Load User 
+    const loadUser = () => console.log('load user');
+    
 
     // Register User
     const register = async (formData) => {
@@ -50,18 +52,28 @@ const AuthState = (props) => {
         }
     }
     // Login User
+    const login = () => console.log('Login');
+
 
     // Logout 
-
-    // Clear Errors
+    const logout = () => console.log('Logout');
     
+    // Clear Errors
+    const clearErrors = () => console.log('Clear errors');
+    
+
     return (
         <AuthContext.Provider value={{
             token: state.token,
             isAuthenticated: state.isAuthenticated,
             loading: state.loading,
             user: state.user,
-            error: state.error
+            error: state.error,
+            register,
+            loadUser,
+            login,
+            logout,
+            clearErrors
         }}>
             { props.children }
         </AuthContext.Provider>
