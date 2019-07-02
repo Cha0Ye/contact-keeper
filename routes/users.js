@@ -44,7 +44,7 @@ router.post('/', [
 
             // if user exist already, return 400 and msg
             if(user) {
-                return res.status(400).json({ msg: 'User already exist' });
+                return res.status(400).json({ msg: 'User already exists' });
             }
 
             //otherwise, create new user instance
