@@ -8,11 +8,15 @@ const Navbar = ({ title, icon }) => {
 
     const { isAuthenticated, logout, user } = authContext;
 
+    const onLogout = () => {
+      logout();
+    }
+
     const authLinks = (
         <Fragment>
           <li>Hello {user && user.name }</li>
           <li>
-            <a href="#!">
+            <a onClick={onLogout} href="/login">
                 <i className="fas fa-sign-out-alt"></i><span className="hide-sm">Logout</span>
             </a>
           </li>
@@ -41,7 +45,7 @@ const Navbar = ({ title, icon }) => {
             </ul>
         </div>
     );
-}
+};
 
 Navbar.protoTypes = {
     title: PropTypes.string.isRequired,
