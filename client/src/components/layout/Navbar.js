@@ -9,6 +9,7 @@ const Navbar = ({ title, icon }) => {
     const { isAuthenticated, logout, user } = authContext;
 
     const onLogout = () => {
+      console.log('onClick activated!!!!!!');
       logout();
     }
 
