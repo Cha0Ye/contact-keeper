@@ -10,9 +10,11 @@ const Navbar = ({ title, icon }) => {
 
     const { isAuthenticated, logout, user } = authContext;
     const { clearContacts } = contactContext;
+
     const onLogout = () => {
       console.log('onClick activated!!!!!!');
       logout();
+      clearContacts();
     }
 
     const authLinks = (

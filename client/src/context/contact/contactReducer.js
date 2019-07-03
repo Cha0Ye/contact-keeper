@@ -19,6 +19,15 @@ export default (state, action) => {
                 contacts: action.payload,
                 loading: false
             }
+
+        case CLEAR_CONTACTS:
+            return {
+                ...state,
+                contacts: null,
+                filtered: null,
+                error: null, 
+                current: null
+            }
         case ADD_CONTACT:
             return {
                 ...state, 
